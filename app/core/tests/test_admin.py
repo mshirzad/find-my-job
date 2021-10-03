@@ -23,21 +23,21 @@ class TestAdminSite(TestCase):
     def test_users_list(self):
 
         url = reverse('admin:core_user_changelist')
-        response = self.client.get(url)
+        resp = self.client.get(url)
 
-        self.assertContains(response, self.user.name)
-        self.assertContains(response, self.user.email)
+        self.assertContains(resp, self.user.name)
+        self.assertContains(resp, self.user.email)
         
     def test_user_change_page(self):
 
         url = reverse('admin:core_user_change', args=[self.user.id])
-        response = self.client.get(url)
+        resp = self.client.get(url)
 
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(resp.status_code, 200)
 
     def test_user_add_page(self):
 
         url = reverse('admin:core_user_add')
-        response = self.client.get(url)
+        resp = self.client.get(url)
 
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(resp.status_code, 200)
