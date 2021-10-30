@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, \
                                         PermissionsMixin
-
+from django.conf import settings
 
 class UserManager(BaseUserManager):
 
@@ -37,3 +37,38 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_job_seeker = models.BooleanField(default=False)
     objects = UserManager()
     USERNAME_FIELD = 'email'
+
+
+class Address(models.Model):
+
+    country = models.CharField(max_length=255)
+    city = models.CharField(max_length=255)
+    distrect = models.IntegerField()
+    street = models.CharField(max_length=255)
+    address_line = models.CharField(max_length=255)
+
+
+class Profile(models.Model):
+
+    PROFESSION_CHOICES = (
+        ('Eng', 'Engineer'),
+        ('Acc', 'Accountant'),
+        ('Phy', 'Physician'),
+        ('Tech', 'Technician'),
+        ('Plu', 'Plumber'),
+        ('Elect', 'Electrician'),
+        ('Carp', 'Carpenter'),
+        ('Phot','Photographer')
+    ) 
+
+    name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
+    phone = models.IntegerField()
+    profession = models.CharField(max_length=255, choices=PROFESSION_CHOICES)
+    #image field must be added.
+    ratings = models.FloatField(default=0)
+    base_addr = models.ForeignKey(Address, null=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
