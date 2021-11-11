@@ -8,14 +8,14 @@ from core import models
 class UserAdmin(BaseUserAdmin):
 
     ordering = ['id']
-    list_display = ['id', 'name', 'email', 'is_staff', 'is_job_seeker']
+    list_display = ['id', 'name', 'email', 'is_staff', 'is_freelancer']
 
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         (_('Personal Info'), {'fields': ('name',)}),
         (
             _('Permissions'),
-            {'fields': ('is_active', 'is_staff', 'is_superuser', 'is_job_seeker')}
+            {'fields': ('is_active', 'is_staff', 'is_superuser', 'is_freelancer')}
         ),
         (_('Important Dates'), {'fields': ('last_login',)})
     )
@@ -30,11 +30,14 @@ class UserAdmin(BaseUserAdmin):
                 'password2', 
                 'is_staff', 
                 'is_superuser', 
-                'is_job_seeker')
+                'is_freelancer')
         }),
     )
 
 admin.site.register(models.User, UserAdmin)
 admin.site.register(models.Profile)
 admin.site.register(models.Address)
+admin.site.register(models.Gig)
+admin.site.register(models.Education)
+
 
